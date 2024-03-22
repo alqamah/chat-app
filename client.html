@@ -46,6 +46,16 @@
                 messageInput.value = '';
             }
         });
+
+        //Listen for the broadcast message
+        socket.on('broadcast_message', (message) => {
+            console.log('msg received');
+            //add the message to the list
+            const messageElement = document.createElement("div");
+            messageElement.innerText = message;
+            messageList.appendChild(messageElement);
+        });
+            
     </script>
 </body>
 

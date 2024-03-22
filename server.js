@@ -18,6 +18,16 @@ const io = new Server(server, { //io uses the http server to establish the conne
 io.on('connection', (socket) => { //'connection' event is fired when a user connects to the server
     console.log('client connected');
     //socket is the instance of io
+
+
+    //listening and broadcasting the message
+    socket.on('new_message', (data) => {
+        //console.log(data);
+        socket.broadcast.emit('broadcast_message', data); 
+        //client is not expecting this response, server will automatically broadcast this message to all the clients
+    });
+    
+    
     socket.on('disconnect', () => { //'disconnect' event is fired when a user disconnects from the server
         console.log('client disconnected');
     });
