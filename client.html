@@ -25,6 +25,12 @@
         socket.on('connect',()=>{
             console.log('connected to server');
         })
+        
+        //get the usn
+        const userName = prompt("Enter your name: ");
+        //emit the name to the server
+        socket.emit('setUsername',userName);
+
 
         // get the elements
         const messageInput = document.getElementById("message-input");
@@ -39,7 +45,7 @@
                 console.log('msg emitted');
                 // add message to the list 
                 const messageElement = document.createElement("div");
-                messageElement.innerText = message;
+                messageElement.innerText =userName+":"+message;
                 messageList.appendChild(messageElement);
 
                 //  Reset the value of textbox to empty
@@ -48,11 +54,11 @@
         });
 
         //Listen for the broadcast message
-        socket.on('broadcast_message', (message) => {
+        socket.on('broadcast_message', (rmessage) => {
             console.log('msg received');
             //add the message to the list
             const messageElement = document.createElement("div");
-            messageElement.innerText = message;
+            messageElement.innerText = rmessage.username+":"+rmessage.message;
             messageList.appendChild(messageElement);
         });
             

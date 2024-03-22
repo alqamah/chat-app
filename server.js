@@ -19,11 +19,23 @@ io.on('connection', (socket) => { //'connection' event is fired when a user conn
     console.log('client connected');
     //socket is the instance of io
 
+    //setting the username recvd by the client
+    socket.on('setUsername',(data)=>{
+        socket.username = data;
+        //console.log(data);
+    });
 
     //listening and broadcasting the message
     socket.on('new_message', (data) => {
         //console.log(data);
-        socket.broadcast.emit('broadcast_message', data); 
+
+        //set the usn and msg
+        let message = {
+            username: socket.username,
+            message: data,
+        };
+        
+        socket.broadcast.emit('broadcast_message', message); 
         //client is not expecting this response, server will automatically broadcast this message to all the clients
     });
     
