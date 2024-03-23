@@ -2,6 +2,7 @@ import express from 'express';
 import {Server} from 'socket.io';
 import cors from 'cors';
 import http from 'http';
+import { chatModel } from './chat.schema.js';
 
 //1. create the server
 const server = http.createServer(express());
@@ -34,7 +35,14 @@ io.on('connection', (socket) => { //'connection' event is fired when a user conn
             username: socket.username,
             message: data,
         };
-        
+        //store the data in db
+        const newChat = new chatModel({
+            username: socket.username,
+            message: message,
+            timestamp: new Date().toString()
+        });
+        newChat.save();
+
         socket.broadcast.emit('broadcast_message', message); 
         //client is not expecting this response, server will automatically broadcast this message to all the clients
     });
