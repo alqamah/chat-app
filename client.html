@@ -61,6 +61,12 @@
             messageElement.innerText = rmessage.username+":"+rmessage.message;
             messageList.appendChild(messageElement);
         });
+
+        socket.on('load_messages',(messages)=>{
+            const messageElement = document.createElement("div");
+            messageElement.innerText = new Date(messages.timestamp).toDateString+" - "+messages.username+":"+messages.message;
+            messageList.appendChild(messageElement);
+        })
             
     </script>
 </body>

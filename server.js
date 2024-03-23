@@ -24,6 +24,12 @@ io.on('connection', (socket) => { //'connection' event is fired when a user conn
     socket.on('setUsername',(data)=>{
         socket.username = data;
         //console.log(data);
+        chatModel.find().sort({timestamp:1}).limit(50)
+            .then(messages=>{
+                socket.emit('load_messages',messages);
+            }).catch(err=>{
+                console.log(err);
+            });
     });
 
     //listening and broadcasting the message
