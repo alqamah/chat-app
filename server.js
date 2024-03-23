@@ -39,7 +39,7 @@ io.on('connection', (socket) => { //'connection' event is fired when a user conn
         const newChat = new chatModel({
             username: socket.username,
             message: message,
-            timestamp: new Date().toString()
+            timestamp: new Date()
         });
         newChat.save();
 
